@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+.index {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.Index-Last10 {
+  margin-top: 1rem;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border: 1px solid lightgray;
+}
+
+.Index-Last10ByHour {
+  margin-top: 1rem;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border: 1px solid lightgray;
+}
+
+.Index-Last10 > caption {
+  font-size: larger;
+  padding-bottom: 0.5rem;
+}
+
+.Index-Last10ByHour > caption {
+  font-size: larger;
+  padding-bottom: 0.5rem;
+}
+
+ tbody tr:nth-child(odd) {
+  background-color: lightgray;
+}
+
+tbody tr:nth-child(even) {
+  background-color: white;
+}
+
+ th,
+ td {
+  padding: 0.5rem;
+  border: 1px solid rgb(190,190,190);
+}
+</style>
+</head>
+<body>
+	<div class="index">
+		<h1>Welcom to Wordle 2023</h1>
+		<form method="post" th:action="@{/games}">
+			<button>Start New Game</button></br>
+		</form>
+		
+		<button onclick="statistic()">Statist</button>
+
+		<div>
+			<table class="Index-Last10">
+				<caption>Резултати от последните 10 игри</caption>
+				<thead>
+					<th>Дата</th>
+					<th>Резултат</th>
+					<th>Опити</th>
+					<th>Дума</th>
+				</thead>
+				<tbody >
+					<tr th:each="game: ${last10}">
+						<td th:text="${{game.startedOn}}">12/10/2023</td>
+						<td th:text="${game.state}">LOST</td>
+						<td th:text="${game.guesses.size()}">6</td>
+						<td th:text="${game.word}">проба</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="Last10ByHour" style="display:none">
+			<table class="Index-Last10ByHour">
+				<caption>Резултати от последните 10 игри</caption>
+				<thead>
+					<th>Дата</th>
+					<th>Резултат</th>
+					<th>Опити</th>
+					<th>Дума</th>
+				</thead>
+				<tbody >
+					<tr th:each="game: ${last10ByHour}">
+						<td th:text="${{game.startedOn}}">12/10/2023</td>
+						<td th:text="LOSS">LOST</td>
+						<td th:text="${game.guesses.size()}">6</td>
+						<td th:text="${game.word}">проба</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script>
+	function statistic() {
+  		document.getElementsByClassName("Index-Last10")[0].style.display = "none";
+  		document.getElementsByClassName("Last10ByHour")[0].style.display = "block";
+}
+	</script>
+</body>
+</html>
